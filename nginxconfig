@@ -1,0 +1,34 @@
+# GPS Tracker Website
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/gpstracker;
+
+        # Add index.php to the list if you are using PHP
+        index testing2.php;
+
+        server_name _;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        location ~ \.php$ {
+               include snippets/fastcgi-php.conf;
+               fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+        }
+
+       # location ~ \.js$ {
+       #        try_files $uri $uri/ =404;
+       #        allow all;
+       # }
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        location ~ /\.ht {
+               deny all;
+        }
